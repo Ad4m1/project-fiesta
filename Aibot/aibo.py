@@ -8,7 +8,7 @@ from pathlib import Path
 from random import *
 import os
  
- 
+ //asdfafasdfasdf
 
  
 Client = discord.Client()
