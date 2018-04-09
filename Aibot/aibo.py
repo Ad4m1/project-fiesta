@@ -8,7 +8,7 @@ from pathlib import Path
 from random import *
 import os
  
-
+#hello there
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
