@@ -9,7 +9,8 @@ from random import *
 import os
  
 #comment
- 
+#comments
+
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
 cList = ["WARRIOR", "MAGE", "HUNTER", "ROGUE", "KNIGHT"]
