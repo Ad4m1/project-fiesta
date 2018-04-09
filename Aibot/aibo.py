@@ -8,10 +8,7 @@ from pathlib import Path
 from random import *
 import os
  
-#comment
-#comments
-#rpgs are neat
-#comments2
+
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
