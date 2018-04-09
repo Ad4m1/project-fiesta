@@ -10,6 +10,7 @@ import os
  
 #comment
 #comments
+#rpgs are neat
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
