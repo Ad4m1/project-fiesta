@@ -10,6 +10,7 @@ import os
  
 #comment
 #comments
+#rpgs are neat
 #comments2
 
 Client = discord.Client()
