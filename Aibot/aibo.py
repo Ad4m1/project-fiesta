@@ -8,7 +8,7 @@ from pathlib import Path
 from random import *
 import os
 
- #hey there
+ #Adam's local branch!
 
 
 Client = discord.Client()
