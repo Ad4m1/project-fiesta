@@ -14,16 +14,21 @@ import os
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
 cList = ["WARRIOR", "MAGE", "HUNTER", "ROGUE", "KNIGHT"]
-#class#S;W;Sp;D;H;w;w;Armour;ring
-sWarrior = '1;10;5;6;6;10;short sword;none;none;none'
-sMage = '1;5;10;6;6;10;beginners staff;none;none;none'
-sHunter = '1;5;5;7;9;10;short bow;none;none;none'
-sRogue = '1;4;4;9;9;10;rusty dagger;none;none;none'
-sKnight = '1;7;3;4;4;15;short sword;shield;none;none'
+#class#S;W;Sp;D;H;w;w;Armour;ring;xp
+sWarrior = '1;10;5;6;6;10;short sword;none;none;none;0'
+sMage = '1;5;10;6;6;10;beginners staff;none;none;none;0'
+sHunter = '1;5;5;7;9;10;short bow;none;none;none;0'
+sRogue = '1;4;4;9;9;10;rusty dagger;none;none;none;0'
+sKnight = '1;7;3;4;4;15;short sword;shield;none;none;0'
 #amounts of rarity mobs
 cLen = 5
 uLen = 3
 rLen = 2
+
+#xp
+c = 10
+u = 15
+r = 25
 
 @client.event
 async def on_ready():
@@ -96,6 +101,8 @@ def wAdv(uStats, advFile):
         att = gStat(sl, 'dexterity')
 
     hAtt = int(int(att)/2)
+    
+    
 
     #name;rarity;hp;dmg;phys/mag/true;drop
     
@@ -267,6 +274,19 @@ async def on_message(message):
                 a = open(advFile, 'w')
                 a.write(advInfo[0] + ';' + str(newHP) + ';' + advInfo[2] + ';' + advInfo[3] + ';' + advInfo[4] + ';' + str(eneHP) + ';' + advInfo[6])
                 a.close()
+                
+                u = open(uStats, 'r')
+                line = u.readline()
+                u.close()
+                
+                line = line.split(';')
+                line[11] = str(int(line[11]) + c)
+                
+               u = open(uStats, 'w')
+               u.write(line)
+               u.close()
+               
+                
                 
                 
                 
