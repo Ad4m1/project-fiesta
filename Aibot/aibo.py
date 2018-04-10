@@ -262,29 +262,45 @@ async def on_message(message):
                 a.close()
 
                 advInfo = advInfo.split(';')
-
+                
                 deal = randint(int(advInfo[4]), int(advInfo[3])) + int(advInfo[2])
                 take = randint(int(advInfo[6])-1,int(advInfo[6])+1)
 
                 newHP = int(advInfo[1]) - take
                 eneHP = int(advInfo[5]) - deal
 
+                if newHP < 0:
+                    newHP = 0
+                if eneHP < 0:
+                    eneHP = 0
+
                 await client.send_message(message.channel, 'You attacked.\n `Dealt: ' + str(deal) + '` - `Took: ' + str(take) + '`\n Your HP: ' + str(newHP) + '\n Enemy HP: ' + str(eneHP))
                 
                 a = open(advFile, 'w')
                 a.write(advInfo[0] + ';' + str(newHP) + ';' + advInfo[2] + ';' + advInfo[3] + ';' + advInfo[4] + ';' + str(eneHP) + ';' + advInfo[6])
                 a.close()
+
+                #win
+                if int(eneHP) == 0:
+                    u = open(uStats, 'r')
+                    line = u.readline()
+                    u.close()
+                    
+                    line = line.split(';')
+                    line[11] = str(int(line[11]) + c)
+
+                    line = ";".join(line)
+                    
+                    u = open(uStats, 'w')
+                    u.write(str(line))
+                    u.close()
+
+                    await client.send_message(message.channel, 'You have been awarded ' + str(c) + 'xp for your victory!')
+                    os.remove(advFile)
+                #lose
+                elif advInfo[1] == 0:
+                    lose = 1
                 
-                u = open(uStats, 'r')
-                line = u.readline()
-                u.close()
-                
-                line = line.split(';')
-                line[11] = str(int(line[11]) + c)
-                
-               u = open(uStats, 'w')
-               u.write(line)
-               u.close()
                
                 
                 
