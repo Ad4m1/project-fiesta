@@ -136,6 +136,7 @@ async def on_message(message):
     mID = message.author.id
     uStats = Path('users/' + mID + '.stat')
     advFile = Path('advs/' + mID + '.adv')
+    tFile = Path('cd/' + mID + '.t')
     
 
     
@@ -196,64 +197,95 @@ async def on_message(message):
         else:
             if not advFile.is_file():
 
-
                 
-                uName = message.author.mention
-                find = randint(1,1000)
-                #common
-                if find > 579 or find < 400:
-                    mob = randint(1,cLen)
-                    mobFile = Path('mobs/' + 'c' + str(mob) + '.mob')
-                    m = open(mobFile, 'r')
-                    line = m.readline()
-                    m.close()
+           
+                if tFile.is_file():
+                
+                    t = open(tFile, 'r')
+                    waitTil = int(t.readline())
+                    t.close()
+
+                    tCurr = str(datetime.datetime.now())
+                    tCurr.replace('-','')
+                    tCurr.replace(' ','')
+                    tCurr.replace(':','')
+                    tCurr.replace('.','')
+                    tCurr = int(tCurr)
+              
+                    if tCurr > waitTil:
+             
+                
+                        uName = message.author.mention
+                        find = randint(1,1000)
+                        #common
+                        if find > 579 or find < 400:
+                            mob = randint(1,cLen)
+                            mobFile = Path('mobs/' + 'c' + str(mob) + '.mob')
+                            m = open(mobFile, 'r')
+                            line = m.readline()
+                            m.close()
+
+                            line = line.split(';')
+                            mName = line[0]
+                            await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                            a = open(advFile, 'w+')
+                            a.write(str(mobFile))
+                            a.close()
+
+                            wAdv(uStats, advFile)
+
+
+                        #uncommon
+                        elif find > 399 and find < 520:
+                            mob = randint(1,uLen)
+                            mobFile = Path('mobs/' + 'u' + str(mob) + '.mob')
+                            m = open(mobFile, 'r')
+                            line = m.readline()
+                            m.close()
+
+                            line = line.split(';')
+                            mName = line[0]
+                            await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                            a = open(advFile, 'w+')
+                            a.write(str(mobFile))
+                            a.close()
+
+                            wAdv(uStats, advFile)
+                        #rare
+                        elif find > 519 and find < 580:
+                            mob = randint(1,rLen)
+                            mobFile = Path('mobs/' + 'r' + str(mob) + '.mob')
+                            m = open(mobFile, 'r')
+                            line = m.readline()
+                            m.close()
+
+                            line = line.split(';')
+                            mName = line[0]
+                            await client.send_message(message.channel, uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                            a = open(advFile, 'w+')
+                            a.write(str(mobFile))
+                            a.close()
+
+                            wAdv(uStats, advFile)
+                
+                #not file
+                else:
+                    tCurr = str(datetime.datetime.now())
+                    tCurr.replace('-','')
+                    tCurr.replace(' ','')
+                    tCurr.replace(':','')
+                    tCurr.replace('.','')
+                    tCurr = str(tCurr)
                     
-                    line = line.split(';')
-                    mName = line[0]
-                    await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
-
-                    a = open(advFile, 'w+')
-                    a.write(str(mobFile))
-                    a.close()
-
-                    wAdv(uStats, advFile)
-
+                    t = open(tFile, 'w+')
+                    t.write(tCurr)
+                    t.close()
                     
-                #uncommon
-                elif find > 399 and find < 520:
-                    mob = randint(1,uLen)
-                    mobFile = Path('mobs/' + 'u' + str(mob) + '.mob')
-                    m = open(mobFile, 'r')
-                    line = m.readline()
-                    m.close()
-                    
-                    line = line.split(';')
-                    mName = line[0]
-                    await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
-
-                    a = open(advFile, 'w+')
-                    a.write(str(mobFile))
-                    a.close()
-
-                    wAdv(uStats, advFile)
-                #rare
-                elif find > 519 and find < 580:
-                    mob = randint(1,rLen)
-                    mobFile = Path('mobs/' + 'r' + str(mob) + '.mob')
-                    m = open(mobFile, 'r')
-                    line = m.readline()
-                    m.close()
-                    
-                    line = line.split(';')
-                    mName = line[0]
-                    await client.send_message(message.channel, uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
-
-                    a = open(advFile, 'w+')
-                    a.write(str(mobFile))
-                    a.close()
-
-                    wAdv(uStats, advFile)
-        
+                   
+                
             else:
                 
 
@@ -299,7 +331,8 @@ async def on_message(message):
                     os.remove(advFile)
                 #lose
                 elif advInfo[1] == 0:
-                    lose = 1
+                    await client.send_message(message.channel, 'You have been defeated!')
+                    os.remove(advFile)
                 
                
                 
