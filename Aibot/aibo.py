@@ -206,13 +206,19 @@ async def on_message(message):
                     t.close()
 
                     tCurr = str(datetime.datetime.now())
-                    tCurr.replace('-','')
-                    tCurr.replace(' ','')
-                    tCurr.replace(':','')
-                    tCurr.replace('.','')
+                    tCurr = tCurr.replace('-','')
+                    tCurr = tCurr.replace(' ','')
+                    tCurr = tCurr.replace(':','')
+                    tCurr = tCurr.replace('.','')
                     tCurr = int(tCurr)
+
+                    
               
-                    if tCurr > waitTil:
+                    if tCurr > waitTil + 100000000:
+
+                        t = open(tFile, 'w+')
+                        t.write(str(tCurr))
+                        t.close()
              
                 
                         uName = message.author.mention
@@ -274,15 +280,71 @@ async def on_message(message):
                 #not file
                 else:
                     tCurr = str(datetime.datetime.now())
-                    tCurr.replace('-','')
-                    tCurr.replace(' ','')
-                    tCurr.replace(':','')
-                    tCurr.replace('.','')
+                    tCurr = tCurr.replace('-','')
+                    tCurr = tCurr.replace(' ','')
+                    tCurr = tCurr.replace(':','')
+                    tCurr = tCurr.replace('.','')
                     tCurr = str(tCurr)
                     
                     t = open(tFile, 'w+')
                     t.write(tCurr)
                     t.close()
+
+                    uName = message.author.mention
+                    find = randint(1,1000)
+                    #common
+                    if find > 579 or find < 400:
+                        mob = randint(1,cLen)
+                        mobFile = Path('mobs/' + 'c' + str(mob) + '.mob')
+                        m = open(mobFile, 'r')
+                        line = m.readline()
+                        m.close()
+
+                        line = line.split(';')
+                        mName = line[0]
+                        await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                        a = open(advFile, 'w+')
+                        a.write(str(mobFile))
+                        a.close()
+
+                        wAdv(uStats, advFile)
+
+
+                    #uncommon
+                    elif find > 399 and find < 520:
+                        mob = randint(1,uLen)
+                        mobFile = Path('mobs/' + 'u' + str(mob) + '.mob')
+                        m = open(mobFile, 'r')
+                        line = m.readline()
+                        m.close()
+
+                        line = line.split(';')
+                        mName = line[0]
+                        await client.send_message(message.channel,uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                        a = open(advFile, 'w+')
+                        a.write(str(mobFile))
+                        a.close()
+
+                        wAdv(uStats, advFile)
+                    #rare
+                    elif find > 519 and find < 580:
+                        mob = randint(1,rLen)
+                        mobFile = Path('mobs/' + 'r' + str(mob) + '.mob')
+                        m = open(mobFile, 'r')
+                        line = m.readline()
+                        m.close()
+
+                        line = line.split(';')
+                        mName = line[0]
+                        await client.send_message(message.channel, uName + ' encountered a **' + mName + '**\n'+ 'It\'s Health Points: ' + line[2] + '\n`!!adv` to fight or `!!flee` to make a run for it.')
+
+                        a = open(advFile, 'w+')
+                        a.write(str(mobFile))
+                        a.close()
+
+                        wAdv(uStats, advFile)
                     
                    
                 
