@@ -15,11 +15,11 @@ Client = discord.Client()
 client = commands.Bot(command_prefix = "!!")
 cList = ["WARRIOR", "MAGE", "HUNTER", "ROGUE", "KNIGHT"]
 #class#S;W;Sp;D;H;w;w;Armour;ring;xp
-sWarrior = '1;10;5;6;6;10;short sword;none;none;none;0'
-sMage = '1;5;10;6;6;10;beginners staff;none;none;none;0'
-sHunter = '1;5;5;7;9;10;short bow;none;none;none;0'
-sRogue = '1;4;4;9;9;10;rusty dagger;none;none;none;0'
-sKnight = '1;7;3;4;4;15;short sword;shield;none;none;0'
+sWarrior = '1;7;1;3;1;12;short sword;none;none;none;0'
+sMage = '1;2;7;3;2;10;beginners staff;none;none;none;0'
+sHunter = '1;2;2;3;7;10;short bow;none;none;none;0'
+sRogue = '1;2;1;4;7;10;rusty dagger;none;none;none;0'
+sKnight = '1;4;1;2;1;16;short sword;damaged shield;none;none;0'
 #amounts of rarity mobs
 cLen = 5
 uLen = 3
@@ -302,21 +302,6 @@ async def on_message(message):
                     lose = 1
                 
                
-                
-                
-                
-                
-                
-                
-
-                
-                
-                
-    
-
-                
-                
-                
     if message.content.upper() == '!!FLEE' or message.content.upper() == '!!FF':
         uName = message.author.mention
         
